@@ -11,19 +11,19 @@ export default function Search({ select }) {
 	}
 	function handleKeyPress(e) {
 		if (e.key === "Enter") {
-			select(() => searchResults[0].coordinates);
+			select(() =>
+				searchResults.length !== 0 ? searchResults[0].coordinates : []
+			);
 		}
 	}
 
-	// get GeoAPI data
+	// get GeoAPI data, if inputValue isn't empty
 	useEffect(() => {
-		const asyncFunc = async () => {
-			const results = await GeoAPI.getSearchResults(inputValue);
-
-			setSearchResults(() => results);
-		};
-
-		asyncFunc();
+		if (inputValue !== "") {
+			GeoAPI.getSearchResults(inputValue).then((results) => {
+				setSearchResults(() => results);
+			});
+		}
 	}, [inputValue]);
 
 	return (

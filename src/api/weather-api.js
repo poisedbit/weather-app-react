@@ -2,8 +2,9 @@ export default class WeatherAPI {
 	static async getForecastResults(latitude, longitude) {
 		const data = await this.getData(latitude, longitude);
 		const forecastResults = {};
+
 		forecastResults.timezone = data.timezone;
-		forecastResults.currentWeather = data.current_weather;
+		forecastResults.now = data.current_weather;
 		forecastResults.hourly = data.hourly;
 		forecastResults.hourly.units = data.hourly_units;
 		forecastResults.daily = data.daily;

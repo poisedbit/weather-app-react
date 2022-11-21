@@ -3,6 +3,10 @@ export default class GeoAPI {
 		const data = await this.getData(searchString);
 		const searchResults = [];
 
+		if (data.results === undefined) {
+			return [];
+		}
+
 		data.results.forEach((item, index) => {
 			if (index < 5) {
 				const locationData = [
