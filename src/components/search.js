@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GeoAPI from "../api/geocoding-api";
 import SearchOption from "./search-option";
 
-export default function Search({ select }) {
+export default function Search({ setCoordinates }) {
 	const [inputValue, setInputValue] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
+	const [results, setResults] = useState([]);
+	// remove search list when: user presses enter, user clicks on an option
 
 	function handleChange(e) {
 		setInputValue(e.target.value);
 	}
 	function handleKeyPress(e) {
 		if (e.key === "Enter") {
-			select(() =>
-				searchResults.length !== 0 ? searchResults[0].coordinates : []
+			setCoordinates(() =>
+				results.length !== 0 ? results[0].coordinates : []
 			);
 		}
 	}
-
 	// get GeoAPI data, if inputValue isn't empty
 	useEffect(() => {
 		if (inputValue !== "") {
 			GeoAPI.getSearchResults(inputValue).then((results) => {
-				setSearchResults(() => results);
+				setResults(() => results);
 			});
 		}
+
+		return () => {};
 	}, [inputValue]);
 
 	return (
@@ -40,10 +42,10 @@ export default function Search({ select }) {
 				/>
 			</form>
 			<ul>
-				{searchResults.map((item, index) => (
+				{results.map((item, index) => (
 					<SearchOption
 						optionData={item}
-						select={select}
+						setCoordinates={setCoordinates}
 						key={index}
 					/>
 				))}

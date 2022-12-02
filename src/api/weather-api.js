@@ -1,16 +1,71 @@
 export default class WeatherAPI {
+	static isDay(time) {
+		const split = time.split("T")[1].split(":");
+
+		if (split[0] >= 4 && split[0] < 18) {
+			return true;
+		}
+		return false;
+	}
+	static translateWeatherCode(code) {
+		let translation;
+
+		switch (code) {
+			case 0:
+			case 1:
+				translation = "clear";
+				break;
+			case 2:
+				translation = "few clouds";
+				break;
+			case 3:
+				translation = "overcast";
+				break;
+			case 45:
+			case 48:
+				translation = "fog";
+				break;
+			case 51:
+			case 53:
+			case 55:
+			case 56:
+			case 57:
+			case 61:
+			case 63:
+			case 65:
+			case 66:
+			case 67:
+			case 80:
+			case 81:
+			case 82:
+				translation = "rain";
+				break;
+			case 71:
+			case 73:
+			case 75:
+			case 77:
+			case 85:
+			case 86:
+				translation = "snow";
+				break;
+			case 95:
+			case 96:
+			case 99:
+				translation = "thunderstorm";
+				break;
+			default:
+		}
+
+		return translation;
+	}
 	static async getForecastResults(latitude, longitude) {
 		const data = await this.getData(latitude, longitude);
-		const forecastResults = {};
+		const results = {};
 
-		forecastResults.timezone = data.timezone;
-		forecastResults.now = data.current_weather;
-		forecastResults.hourly = data.hourly;
-		forecastResults.hourly.units = data.hourly_units;
-		forecastResults.daily = data.daily;
-		forecastResults.daily.units = data.daily_units;
+		results.timezone = data.timezone;
+		results.current = data.current_weather;
 
-		return forecastResults;
+		return results;
 	}
 	static async getData(latitude, longitude) {
 		const url = this.getURL(latitude, longitude);

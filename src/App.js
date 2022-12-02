@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "./components/search";
 import Weather from "./components/weather";
 
 function App() {
-	const [coordinates, useCoordinates] = useState([]);
+	const [coordinates, setCoordinates] = useState([]);
+	useEffect(() => {
+		console.log(coordinates);
+	}, [coordinates]);
 
 	return (
 		<div className="App">
-			<Search select={useCoordinates} />
+			<h1 id="Title">Weather App</h1>
+			<Search setCoordinates={setCoordinates} />
+			<Weather coordinates={coordinates} />
 		</div>
 	);
 }
