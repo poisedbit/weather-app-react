@@ -1,9 +1,14 @@
-export default function SearchOption({ optionData, setCoordinates }) {
-	const { locationString, coordinates } = optionData;
+export default function SearchOption({ optionData, setOption, setIsOption }) {
+	const { locationString } = optionData;
 
-	function handleClick() {
-		setCoordinates(() => coordinates);
+	function select() {
+		setIsOption(true);
+		setOption(() => optionData);
 	}
 
-	return <li onClick={handleClick}>{locationString}</li>;
+	return (
+		<li className="search-option" onClick={select}>
+			{locationString}
+		</li>
+	);
 }
