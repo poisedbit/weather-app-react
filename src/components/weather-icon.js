@@ -17,12 +17,18 @@ export default function WeatherIcon({ weatherCode, size, isDay }) {
 
 	switch (WeatherAPI.translateWeatherCode(weatherCode)) {
 		case "clear":
-			if (isDay) icon = <Sun size={iconSize} />;
-			icon = <Moon size={iconSize} />;
+			if (isDay) {
+				icon = <Sun size={iconSize} />;
+			} else {
+				icon = <Moon size={iconSize} />;
+			}
 			break;
 		case "few clouds":
-			if (isDay) icon = <CloudSun size={iconSize} />;
-			icon = <CloudMoon size={iconSize} />;
+			if (isDay) {
+				icon = <CloudSun size={iconSize} />;
+			} else {
+				icon = <CloudMoon size={iconSize} />;
+			}
 			break;
 		case "overcast":
 			icon = <Cloud size={iconSize} />;
