@@ -4,6 +4,7 @@ export default function SearchOption({ optionData, setOption, setIsOption }) {
 	function select() {
 		setIsOption(true);
 		setOption(() => optionData);
+		localStorage.setItem("option", JSON.stringify(optionData));
 	}
 
 	return (
